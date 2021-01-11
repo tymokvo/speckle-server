@@ -6,6 +6,9 @@ ENV POSTGRES_URL="postgres://postgres:pass@postgres:5432/pg"
 ENV REDIS_URL="redis://redis:6379"
 ENV CANONICAL_URL="http://localhost:3000"
 ENV STRATEGY_LOCAL=true
+ENV SESSION_SECRET="verysecret"
+ENV FRONTEND_PORT=8080
+ENV FRONTEND_HOST='frontend'
 
 # Docker-specific
 ENV WORKDIR=/exec

@@ -20,13 +20,20 @@ services:
       - redis
     build:
       context: './packages/server'
+    volumes:
+      - './packages/server:/exec'
     ports:
       - '3000:3000'
   frontend:
     depends_on:
       - backend
+    environment:
+      VUE_APP_GRAPHQL_HTTP: 'http://localhost:3000/graphql'
+      VUE_APP_GRAPHQL_WS: 'ws://localhost:3000/graphql'
     build:
       context: './packages/frontend'
+    volumes:
+      - './packages/frontend:/exec'
     ports:
       - '8080:8080'
 volumes:

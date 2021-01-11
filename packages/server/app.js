@@ -23,6 +23,8 @@ require( 'dotenv' ).config( { path: `${appRoot}/.env` } )
 const { contextApiTokenHelper } = require( './modules/shared' )
 const knex = require( './db/knex' )
 
+const cors = require('cors')
+
 let graphqlServer
 
 /**
@@ -31,6 +33,10 @@ let graphqlServer
  */
 exports.init = async ( ) => {
   const app = express( )
+
+  app.options('*', cors())
+  app.post('*', cors())
+  app.get('*', cors())
 
   SentryInit( app )
 
@@ -99,15 +105,17 @@ exports.startHttp = async ( app ) => {
   app.set( 'port', port )
 
   let frontendPort = process.env.FRONTEND_PORT || 8080
+  let frontendHost = process.env.FRONTEND_HOST || 'frontend'
 
   // Handles frontend proxying:
   // Dev mode -> proxy form the local webpack server
   if ( process.env.NODE_ENV === 'development' ) {
-    const frontendProxy = createProxyMiddleware( { target: `http://localhost:${frontendPort}`, changeOrigin: true, ws: false, logLevel: 'silent' } )
+    const frontendURI = `http://${frontendHost}:${frontendPort}`
+    const frontendProxy = createProxyMiddleware( { target: frontendURI, changeOrigin: true, ws: false, logLevel: 'silent' } )
     app.use( '/', frontendProxy )
 
     debug( 'speckle:startup' )( '✨ Proxying frontend (dev mode):' )
-    debug( 'speckle:startup' )( `👉 main application: http://localhost:${port}/` )
+    debug( 'speckle:startup' )( `👉 main application: ${frontendURI}` )
     debug( 'speckle:hint' )( 'ℹ️  Don\'t forget to run "npm run dev:frontend" in a different terminal to start the vue application.' )
   }
 

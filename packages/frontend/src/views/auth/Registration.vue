@@ -253,7 +253,7 @@ export default {
 
         if (this.suuid) user.suuid = this.suuid
 
-        let res = await fetch(`/auth/local/register?challenge=${this.challenge}`, {
+        let res = await fetch(`http://localhost:3000/auth/local/register?challenge=${this.challenge}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

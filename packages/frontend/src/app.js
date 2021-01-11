@@ -45,6 +45,7 @@ if (AuthToken) {
       window.location = `${window.location.origin}/authn/login`
     })
 } else {
+  console.log('no auth token');
   checkAccessCodeAndGetTokens()
     .then(() => {
       return prefetchUserAndSetSuuid()

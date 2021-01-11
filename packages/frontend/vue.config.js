@@ -13,7 +13,8 @@ module.exports = {
         { from: /^\/$/, to: '/app.html' },
         { from: /./, to: '/app.html' }
       ]
-    }
+    },
+    disableHostCheck: true
   },
   transpileDependencies: ['vuetify']
 }

@@ -5,6 +5,7 @@ const appRoot = require( 'app-root-path' )
 const debug = require( 'debug' )
 const { createUser, updateUser, findOrCreateUser, validatePasssword, getUserByEmail } = require( `${appRoot}/modules/core/services/users` )
 const { getApp, createAuthorizationCode, createAppTokenFromAccessCode } = require( '../services/apps' )
+const cors = require('cors')
 
 module.exports = ( app, session, sessionAppId, finalizeAuth ) => {
   const strategy = {
@@ -37,6 +38,7 @@ module.exports = ( app, session, sessionAppId, finalizeAuth ) => {
   }, finalizeAuth )
 
   app.post( '/auth/local/register', session, sessionAppId, async ( req, res, next ) => {
+    console.log(req.body)
     try {
 
       if ( !req.body.password )

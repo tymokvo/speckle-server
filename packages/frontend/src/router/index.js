@@ -7,7 +7,7 @@ const routes = [
   {
     path: '/authn',
     name: 'Auth',
-    redirect: '/authn/login',
+    // redirect: '/authn/login',
     component: () => import('../views/Auth.vue'),
     children: [
       {
